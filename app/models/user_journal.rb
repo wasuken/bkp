@@ -1,0 +1,2 @@
+class UserJournal < ApplicationRecord
+end
