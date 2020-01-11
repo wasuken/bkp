@@ -8,6 +8,19 @@ class Api::JournalsController < ApplicationController
                   .where('users.id', current_user.id)
                   .select('journals.*, journal_types.name as jtname, journal_types.id as jtid')
   end
+  def create
+    p params
+    j = Journal.create(name: params[:name],
+                       amount: params[:amount],
+                       journal_type_id: params[:journal_type_id])
+    j.save
+    UserJournal.create!(user_id: current_user.id,
+                        journal_id: j.id)
+  end
+  def update
+  end
+  def destroy
+  end
   private
   def authenticate
     authenticate_or_request_with_http_token do |token, _options|

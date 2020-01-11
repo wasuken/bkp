@@ -20,19 +20,19 @@ Journal.create!([
                 ])
 
 User.create!([
-  {
-    email: 'test1@tmail.com',
-    password: 'testtest',
-    name: 'test1',
-    token: SecureRandom.alphanumeric(45)
-  },
-  {
-    email: 'test2@tmail.com',
-    password: 'testtest',
-    name: 'test2',
-    token: SecureRandom.alphanumeric(45)
-  }
-])
+               {
+                 email: 'test1@tmail.com',
+                 password: 'testtest',
+                 name: 'test1',
+                 token: SecureRandom.alphanumeric(45)
+               },
+               {
+                 email: 'test2@tmail.com',
+                 password: 'testtest',
+                 name: 'test2',
+                 token: SecureRandom.alphanumeric(45)
+               }
+             ])
 
 UserJournal.create!([
                       {
