@@ -9,6 +9,9 @@
 						{{journal.name}}({{journal.jtname}})
 						->
 						{{journal.amount}}
+						<small class="text-muted">
+							<button class="btn btn-primary" v-on:click="deleteJournal(journal.id)">delete</button>
+						</small>
 						<br/>
 						<small class="text-muted">{{journal.created_at}}</small>
 					</li>
@@ -22,7 +25,7 @@
 							   aria-label="journal-amount" aria-describedby="basic-addon1"
 							   :id="`journal-amount-${jt.id}`">
 						<button type="button" class="btn btn-primary"
-									  v-on:click="postJournal(jt.id)">Post</button>
+								v-on:click="postJournal(jt.id)">Post</button>
 					</div>
 				</div>
 			</div>
@@ -65,7 +68,7 @@
 				   console.log(this.journalByType);
 			   });
 		 },
-		 postJournal(jtid){
+		 postJournal: function(jtid){
 			 let name = document.getElementById("journal-name-" + jtid).value;
 			 let amount = document.getElementById("journal-amount-" + jtid).value;
 			 let csrf = document.getElementsByName("csrf-token")[0].content;
@@ -81,9 +84,22 @@
 				 }),
 				 body: body,
 			 }).then(resp => {
-				 console.log(resp);
 				 document.getElementById("journal-name-" + jtid).value = "";
 				 document.getElementById("journal-amount-" + jtid).value = "";
+				 setTimeout(function(){ that.fetchJournals(); }, 3000);
+			 });
+		 },
+		 deleteJournal: function(jid){
+			 let csrf = document.getElementsByName("csrf-token")[0].content;
+			 let that = this;
+			 fetch("/api/journals/" + jid, {
+				 method: "delete",
+				 headers: new Headers({
+					 'Authorization': 'Token ' + this.token,
+					 'X-CSRF-Token': csrf,
+				 }),
+			 }).then(resp => {
+				 console.log(resp);
 				 setTimeout(function(){ that.fetchJournals(); }, 3000);
 			 });
 		 },

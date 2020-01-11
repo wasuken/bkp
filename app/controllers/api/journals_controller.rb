@@ -12,14 +12,15 @@ class Api::JournalsController < ApplicationController
     p params
     j = Journal.create(name: params[:name],
                        amount: params[:amount],
-                       journal_type_id: params[:journal_type_id])
+                       journal_type_id: params[:journal_type_id]
+                       user_id: current_user.id)
     j.save
-    UserJournal.create!(user_id: current_user.id,
-                        journal_id: j.id)
   end
   def update
   end
   def destroy
+    target = Journal.where("id = ? and user_id = ?", params[:id], current_user.id).first
+    target.destroy unless target.nil?
   end
   private
   def authenticate

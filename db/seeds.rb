@@ -8,17 +8,6 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 require 'securerandom'
-JournalType.create!([
-                      {name: '支出'},
-                      {name: '収入'}
-                    ])
-spend_id = JournalType.where(name: '支出').first[:id]
-income_id = JournalType.where(name: '収入').first[:id]
-Journal.create!([
-                  {name: '給料', amount: 300000, journal_type_id: income_id },
-                  {name: '食費', amount: 1000, journal_type_id: spend_id }
-                ])
-
 User.create!([
                {
                  email: 'test1@tmail.com',
@@ -33,14 +22,15 @@ User.create!([
                  token: SecureRandom.alphanumeric(45)
                }
              ])
-
-UserJournal.create!([
-                      {
-                        user_id: User.find_by(email: 'test1@tmail.com').id,
-                        journal_id: Journal.find_by(name: '給料').id
-                      },
-                      {
-                        user_id: User.find_by(email: 'test1@tmail.com').id,
-                        journal_id: Journal.find_by(name: '食費').id
-                      }
+JournalType.create!([
+                      {name: '支出'},
+                      {name: '収入'}
                     ])
+spend_id = JournalType.where(name: '支出').first[:id]
+income_id = JournalType.where(name: '収入').first[:id]
+Journal.create!([
+                  {name: '給料', amount: 300000, journal_type_id: income_id,
+                   user_id: User.find_by(email: 'test1@tmail.com').id },
+                  {name: '食費', amount: 1000, journal_type_id: spend_id,
+                   user_id: User.find_by(email: 'test1@tmail.com').id }
+                ])

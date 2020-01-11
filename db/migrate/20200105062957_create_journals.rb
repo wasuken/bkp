@@ -4,6 +4,7 @@ class CreateJournals < ActiveRecord::Migration[6.0]
       t.string :name
       t.integer :amount
       t.integer :journal_type_id
+      t.integer :user_id
 
       t.timestamps
     end
