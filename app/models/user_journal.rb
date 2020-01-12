@@ -1,2 +1,0 @@
-class UserJournal < ApplicationRecord
-end
