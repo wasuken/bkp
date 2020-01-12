@@ -6,14 +6,16 @@
 				<h3>{{jt.name}}</h3>
 				<ul>
 					<li v-for="journal in journalByType[jt.id]">
-						{{journal.name}}({{journal.jtname}})
+						{{journal.name}}
 						->
 						{{journal.amount}}
-						<small class="text-muted">
-							<button class="btn btn-primary" v-on:click="deleteJournal(journal.id)">delete</button>
-						</small>
+						<a class="alert" href="javascript:void(0)" v-on:click="deleteJournal(journal.id)">
+							[delete]
+						</a>
 						<br/>
-						<small class="text-muted">{{journal.created_at}}</small>
+						<small class="text-muted">{{
+												  (new Date(journal.created_at)).toLocaleString('ja-JP')
+												  }}</small>
 					</li>
 				</ul>
 				<div style="py-4 bg-dark text-white-50">

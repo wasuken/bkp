@@ -3,8 +3,7 @@ class Api::JournalsController < ApplicationController
   def index
     @journals = Journal
                   .joins('join journal_types on journal_types.id = journals.journal_type_id')
-                  .joins('join user_journals on journals.id = user_journals.journal_id')
-                  .joins('join users on user_journals.user_id = users.id')
+                  .joins('join users on journals.user_id = users.id')
                   .where('users.id', current_user.id)
                   .select('journals.*, journal_types.name as jtname, journal_types.id as jtid')
   end
@@ -12,7 +11,7 @@ class Api::JournalsController < ApplicationController
     p params
     j = Journal.create(name: params[:name],
                        amount: params[:amount],
-                       journal_type_id: params[:journal_type_id]
+                       journal_type_id: params[:journal_type_id],
                        user_id: current_user.id)
     j.save
   end
