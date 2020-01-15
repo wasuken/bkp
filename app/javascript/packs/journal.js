@@ -1,10 +1,9 @@
 import Vue from 'vue/dist/vue.esm.js';
 
-import Content from './components/journals/content';
+import IOList from './components/journals/IOList';
+import store  from '../store';
 
-document.addEventListener('DOMContentLoaded', () => {
-    const app = new Vue({
-        render: h => h(Content)
-    }).$mount();
-    document.body.appendChild(app.$el);
-});
+new Vue({
+    store,
+    render: h => h(IOList),
+}).$mount('#app');
